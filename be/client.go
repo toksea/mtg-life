@@ -39,6 +39,9 @@ var upgrader = websocket.Upgrader{
 
 // Client is an middleman between the websocket connection and the hub.
 type Client struct {
+
+	// @TODO 增加 Client ID
+
 	hub *Hub
 
 	// The websocket connection.
@@ -58,6 +61,7 @@ func (c *Client) readPump() {
 	c.conn.SetReadDeadline(time.Now().Add(pongWait))
 	c.conn.SetPongHandler(func(string) error { c.conn.SetReadDeadline(time.Now().Add(pongWait)); return nil })
 	for {
+		// 为啥不是 select 而是 for？
 		_, message, err := c.conn.ReadMessage()
 		if err != nil {
 			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway) {
@@ -66,6 +70,16 @@ func (c *Client) readPump() {
 			break
 		}
 		message = bytes.TrimSpace(bytes.Replace(message, newline, space, -1))
+
+		// @TODO
+		// 10. 处理不同类型的消息
+		// 20. 对不同用户发送不同的返回
+		// 如 A draw，对 A 返回抽到的牌，
+		// 对 B 只显示抽了一张牌
+
+		// 消息用 json 还是别的？看 golang 处理哪种方便
+		log.Printf("message: %v %v", c.conn, message)
+
 		c.hub.broadcast <- message
 	}
 }

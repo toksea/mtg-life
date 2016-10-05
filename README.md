@@ -12,3 +12,15 @@
   * golang
   * https://github.com/gorilla/websocket
   * 基于 https://github.com/gorilla/websocket/tree/master/examples/chat
+
+## 数据结构
+
+* match 轮
+* game 局（三局两胜）
+* player
+* deck
+* zone
+    * battleground
+    * graveyard
+    * exiled zone
+    * commander zone
