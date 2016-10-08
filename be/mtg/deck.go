@@ -7,11 +7,6 @@ import (
 	"strings"
 )
 
-type Card struct {
-	name string
-	img  string
-}
-
 type DeckCard struct {
 	card  *Card
 	count int
@@ -52,7 +47,16 @@ func (d *Deck) addFromDecklist(decklist string) {
 	}
 }
 
+func (d *Deck) lookUpCardByName(name string) (deckCard *DeckCard) {
+	return
+}
+
 func (d *Deck) addCard(card *Card, count int) {
+
+	// 搜索是否已有此牌，
+	// 没有则新加，有则
+	// 加数量
+
 	deckCard := DeckCard{
 		card:  card,
 		count: count,
@@ -61,6 +65,7 @@ func (d *Deck) addCard(card *Card, count int) {
 	d.mainboard = append(d.mainboard, deckCard)
 
 }
+
 func (d *Deck) getDecklist() (decklist string) {
 
 	decklist = d.name + "\n"
@@ -78,58 +83,4 @@ func (d *Deck) getDecklist() (decklist string) {
 	}
 
 	return
-}
-
-func main() {
-
-	island := Card{
-		name: "Island",
-		img:  "/img/island.jpg",
-	}
-
-	myDeck := Deck{
-		name: "my islands deck",
-	}
-
-	myDeck.addCard(&island, 60)
-
-	log.Printf("my deck: %v", myDeck.getDecklist())
-
-	decklist := `
-3 Deceiver Exarch
-2 Pestermite
-4 Snapcaster Mage
-2 Tasigur, the Golden Fang
-1 Vendilion Clique
-4 Island
-1 Mountain
-1 Swamp
-1 Blood Crypt
-2 Bloodstained Mire
-1 Desolate Lighthouse
-4 Polluted Delta
-3 Scalding Tarn
-2 Steam Vents
-2 Sulfur Falls
-1 Tectonic Edge
-2 Watery Grave
-3 Splinter Twin
-2 Cryptic Command
-1 Dismember
-1 Dispel
-1 Kolaghan's Command
-4 Lightning Bolt
-4 Remand
-2 Spell Snare
-2 Terminate
-4 Serum Visions
-`
-	twinDeck := Deck{
-		name: "Splinter Twin",
-	}
-
-	twinDeck.addFromDecklist(decklist)
-
-	log.Printf("twin deck: %v", twinDeck.getDecklist())
-
 }
