@@ -56,6 +56,8 @@ func TestAddCardShouldMerge(t *testing.T) {
 	// 获取第一张牌
 	firstCard := myDeck.mainboard[0]
 
+	log.Printf("firstCard: %p %v", &firstCard, firstCard)
+
 	// 应该是 DeckCard
 	assert.IsType(t, DeckCard{}, firstCard)
 
